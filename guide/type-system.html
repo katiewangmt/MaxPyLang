@@ -1,0 +1,499 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Type system: Max for Live gaps &mdash; MaxPyLang 0.1.1</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4da30dbd" />
+
+  
+    <link rel="canonical" href="https://barnard-pl-labs.github.io/MaxPyLang/guide/type-system.html" />
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=a58bc63e"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Coding agents" href="agents.html" />
+    <link rel="prev" title="Editor setup" href="editor-setup.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../contents.html" class="icon icon-home">
+            MaxPyLang
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="connecting.html">Connecting objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="max-for-live.html">Max for Live</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugin-generator.html">Plugin generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="checks.html">Checks and warnings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="editor-setup.html">Editor setup</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Type system: Max for Live gaps</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#how-the-loop-works">How the loop works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#summary">Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#m4l-01-a-dial-s-range-unit-and-start-value-cannot-be-set">M4L-01: a dial’s range, unit and start value cannot be set</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#m4l-02-presentation-mode-has-no-api-and-is-rejected-on-some-objects">M4L-02: presentation mode has no API and is rejected on some objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#m4l-03-a-comment-is-saved-with-its-object-name-in-front-of-its-words">M4L-03: a comment is saved with its object name in front of its words</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#m4l-04-patcher-settings-have-no-api">M4L-04: patcher settings have no API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#m4l-05-a-tap-link-is-not-a-type">M4L-05: a tap link is not a type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#m4l-06-the-device-type-is-not-a-contract">M4L-06: the device type is not a contract</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#m4l-07-a-parameter-s-range-is-invisible-to-the-checks">M4L-07: a parameter’s range is invisible to the checks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#m4l-08-duplicate-parameter-names-are-accepted">M4L-08: duplicate parameter names are accepted</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#m4l-09-output-level-is-unbounded">M4L-09: output level is unbounded</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#m4l-10-a-parameter-that-controls-nothing-is-accepted">M4L-10: a parameter that controls nothing is accepted</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#m4l-11-audio-objects-whose-inlets-have-no-type">M4L-11: audio objects whose inlets have no type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#a-gap-the-checks-caught">A gap the checks caught</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#outside-the-type-system">Outside the type system</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="agents.html">Coding agents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="known-issues.html">Known issues</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/topics.html">Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../API/API.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../support.html">Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../indices.html">Indices</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">MaxPyLang</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../contents.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Type system: Max for Live gaps</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/guide/type-system.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="type-system-max-for-live-gaps">
+<h1>Type system: Max for Live gaps<a class="headerlink" href="#type-system-max-for-live-gaps" title="Link to this heading"></a></h1>
+<p>maxpylang’s type system checks cords as you type and when the script runs (see
+<a class="reference internal" href="checks.html"><span class="doc">Checks and warnings</span></a>). For Max for Live devices it still has gaps. The plugin generator
+(<a class="reference internal" href="plugin-generator.html"><span class="doc">Plugin generator</span></a>) records each one it meets, and each is pinned by a test, so the log
+below always matches the code. It is kept in <code class="docutils literal notranslate"><span class="pre">docs/type-system/m4l-gaps.md</span></code>, shown here as
+it is.</p>
+<p>What maxpylang cannot yet <strong>say</strong> or <strong>check</strong> about a Max for Live device.</p>
+<p>This log is fed by the plugin generator (<code class="docutils literal notranslate"><span class="pre">web/interactive-plugin.html</span></code>). The generator
+builds real audio effects with maxpylang, so every time it needs a workaround, or the
+checks pass a device that is broken, that is a gap, and it goes here.</p>
+<section id="how-the-loop-works">
+<h2>How the loop works<a class="headerlink" href="#how-the-loop-works" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Find.</strong> A gap shows up as a workaround in <code class="docutils literal notranslate"><span class="pre">web/src/plugin/fxgen.py</span></code> (a comment
+reading <code class="docutils literal notranslate"><span class="pre">gap</span> <span class="pre">M4L-NN</span></code>), or as a broken device that <code class="docutils literal notranslate"><span class="pre">save()</span></code> accepts without a warning.</p></li>
+<li><p><strong>Log.</strong> It gets an entry below: what is missing, the evidence, a proposed fix.</p></li>
+<li><p><strong>Pin.</strong> It gets a test in <code class="docutils literal notranslate"><span class="pre">tests/test_m4l_gaps.py</span></code> that states the wanted behaviour
+and is marked <code class="docutils literal notranslate"><span class="pre">xfail(strict=True)</span></code>.</p></li>
+<li><p><strong>Close.</strong> When the gap is fixed its test starts passing, and strict xfail turns that
+into a failure. That failure is the reminder to remove the mark, set the status here
+to closed, and delete the workaround from <code class="docutils literal notranslate"><span class="pre">fxgen.py</span></code>.</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">tests/test_fxgen.py::test_named_gaps_are_the_ones_in_the_log</span></code> keeps the two ends
+attached: every gap the generated script names must have an entry in this file.</p>
+<p>The page shows the same thing to its users. Its “Type check” panel lists the gaps the
+current device had to work around, read off the generated script.</p>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Kind</p></th>
+<th class="head"><p>Gap</p></th>
+<th class="head"><p>Status</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>M4L-01</p></td>
+<td><p>express</p></td>
+<td><p>A dial’s range, unit and start value cannot be set</p></td>
+<td><p>open</p></td>
+</tr>
+<tr class="row-odd"><td><p>M4L-02</p></td>
+<td><p>express</p></td>
+<td><p>Presentation mode has no API and is rejected on some objects</p></td>
+<td><p>open</p></td>
+</tr>
+<tr class="row-even"><td><p>M4L-03</p></td>
+<td><p>express</p></td>
+<td><p>A comment is saved with its object name in front of its words</p></td>
+<td><p>open</p></td>
+</tr>
+<tr class="row-odd"><td><p>M4L-04</p></td>
+<td><p>express</p></td>
+<td><p>Patcher settings (open in presentation, device width) have no API</p></td>
+<td><p>open</p></td>
+</tr>
+<tr class="row-even"><td><p>M4L-05</p></td>
+<td><p>check</p></td>
+<td><p>A tap link is not a type: <code class="docutils literal notranslate"><span class="pre">tapin~</span></code> and <code class="docutils literal notranslate"><span class="pre">tapout~</span></code> pairing is unchecked</p></td>
+<td><p>open</p></td>
+</tr>
+<tr class="row-odd"><td><p>M4L-06</p></td>
+<td><p>check</p></td>
+<td><p>The device type is not a contract</p></td>
+<td><p>open</p></td>
+</tr>
+<tr class="row-even"><td><p>M4L-07</p></td>
+<td><p>check</p></td>
+<td><p>A parameter’s range is invisible to the checks</p></td>
+<td><p>open</p></td>
+</tr>
+<tr class="row-odd"><td><p>M4L-08</p></td>
+<td><p>check</p></td>
+<td><p>Duplicate parameter names are accepted</p></td>
+<td><p>open</p></td>
+</tr>
+<tr class="row-even"><td><p>M4L-09</p></td>
+<td><p>check</p></td>
+<td><p>Output level is unbounded: the <code class="docutils literal notranslate"><span class="pre">clip~</span></code> rule is not checked</p></td>
+<td><p>open</p></td>
+</tr>
+<tr class="row-odd"><td><p>M4L-10</p></td>
+<td><p>check</p></td>
+<td><p>A parameter that controls nothing is accepted</p></td>
+<td><p>open</p></td>
+</tr>
+<tr class="row-even"><td><p>M4L-11</p></td>
+<td><p>check</p></td>
+<td><p>About fifty audio objects have an inlet with no type, so cords into them are not judged</p></td>
+<td><p>open (<code class="docutils literal notranslate"><span class="pre">tanh~</span></code> fixed)</p></td>
+</tr>
+</tbody>
+</table>
+<p>“Express” gaps block the generator and are worked around in its script. “Check” gaps
+do not block it: the generator happens to build correct devices, and the checks would
+not have noticed if it had not.</p>
+</section>
+<hr class="docutils" />
+<section id="m4l-01-a-dial-s-range-unit-and-start-value-cannot-be-set">
+<span id="m4l-01-a-dials-range-unit-and-start-value-cannot-be-set"></span><h2>M4L-01: a dial’s range, unit and start value cannot be set<a class="headerlink" href="#m4l-01-a-dial-s-range-unit-and-start-value-cannot-be-set" title="Link to this heading"></a></h2>
+<p><strong>Missing.</strong> A <code class="docutils literal notranslate"><span class="pre">live.dial</span></code> is only useful with a range. Max keeps the range, the unit,
+the curve and the starting value in the Live parameter block, saved on the box under
+<code class="docutils literal notranslate"><span class="pre">saved_attribute_attributes.valueof</span></code> (<code class="docutils literal notranslate"><span class="pre">parameter_mmin</span></code>, <code class="docutils literal notranslate"><span class="pre">parameter_mmax</span></code>,
+<code class="docutils literal notranslate"><span class="pre">parameter_unitstyle</span></code>, <code class="docutils literal notranslate"><span class="pre">parameter_exponent</span></code>, <code class="docutils literal notranslate"><span class="pre">parameter_initial</span></code>, <code class="docutils literal notranslate"><span class="pre">parameter_longname</span></code>).</p>
+<p><strong>Evidence.</strong> <code class="docutils literal notranslate"><span class="pre">dial.edit(saved_attribute_attributes={...})</span></code> prints
+<code class="docutils literal notranslate"><span class="pre">Error:</span> <span class="pre">live.dial</span> <span class="pre">:</span> <span class="pre">saved_attribute_attributes</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">a</span> <span class="pre">valid</span> <span class="pre">attribute</span> <span class="pre">argument</span></code> and
+drops it. The rejection is a <code class="docutils literal notranslate"><span class="pre">print</span></code>, not a warning or an exception, so a script cannot
+detect it and the device saves with every dial at Max’s default of 0 to 127.</p>
+<p><strong>Workaround.</strong> <code class="docutils literal notranslate"><span class="pre">obj._dict[&quot;box&quot;][&quot;saved_attribute_attributes&quot;]</span> <span class="pre">=</span> <span class="pre">{...}</span></code>.</p>
+<p><strong>Proposed fix.</strong> A typed parameter on the object, for example
+<code class="docutils literal notranslate"><span class="pre">dial.parameter(name,</span> <span class="pre">lo,</span> <span class="pre">hi,</span> <span class="pre">initial,</span> <span class="pre">unit,</span> <span class="pre">exponent)</span></code>, shared by every <code class="docutils literal notranslate"><span class="pre">live.*</span></code> object.
+Separately, make <code class="docutils literal notranslate"><span class="pre">edit()</span></code> warn (<code class="docutils literal notranslate"><span class="pre">UnknownAttributeWarning</span></code>) instead of printing.
+Once ranges are first-class, M4L-07 and M4L-08 become checkable.</p>
+<p><strong>Tests.</strong> <code class="docutils literal notranslate"><span class="pre">test_m4l_01_a_dial_range_can_be_set</span></code>,
+<code class="docutils literal notranslate"><span class="pre">test_m4l_01_a_rejected_attribute_is_not_silent</span></code>.</p>
+</section>
+<section id="m4l-02-presentation-mode-has-no-api-and-is-rejected-on-some-objects">
+<h2>M4L-02: presentation mode has no API and is rejected on some objects<a class="headerlink" href="#m4l-02-presentation-mode-has-no-api-and-is-rejected-on-some-objects" title="Link to this heading"></a></h2>
+<p><strong>Missing.</strong> A device’s interface is its presentation view: each visible box needs
+<code class="docutils literal notranslate"><span class="pre">presentation:</span> <span class="pre">1</span></code> and a <code class="docutils literal notranslate"><span class="pre">presentation_rect</span></code>. Background panels also need <code class="docutils literal notranslate"><span class="pre">background:</span> <span class="pre">1</span></code>.</p>
+<p><strong>Evidence.</strong> <code class="docutils literal notranslate"><span class="pre">edit(presentation=1,</span> <span class="pre">presentation_rect=[...])</span></code> works on <code class="docutils literal notranslate"><span class="pre">live.dial</span></code> and
+<code class="docutils literal notranslate"><span class="pre">live.comment</span></code>, and is rejected on <code class="docutils literal notranslate"><span class="pre">panel</span></code>
+(<code class="docutils literal notranslate"><span class="pre">Error:</span> <span class="pre">panel</span> <span class="pre">:</span> <span class="pre">presentation</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">a</span> <span class="pre">valid</span> <span class="pre">attribute</span> <span class="pre">argument</span></code>). The difference is
+whether the object’s scraped attribute list contains the <code class="docutils literal notranslate"><span class="pre">COMMON</span></code> marker, which is an
+accident of the scrape. Presentation is a property of every box.</p>
+<p><strong>Workaround.</strong> Write the three keys straight into the box dict.</p>
+<p><strong>Proposed fix.</strong> <code class="docutils literal notranslate"><span class="pre">obj.present(x,</span> <span class="pre">y,</span> <span class="pre">w,</span> <span class="pre">h)</span></code> on <code class="docutils literal notranslate"><span class="pre">MaxObject</span></code>, valid for every box, with the
+rect checked as four numbers. Accept the common box attributes on every object whether
+or not its data file lists <code class="docutils literal notranslate"><span class="pre">COMMON</span></code>.</p>
+<p><strong>Test.</strong> <code class="docutils literal notranslate"><span class="pre">test_m4l_02_any_box_can_be_put_in_presentation</span></code>.</p>
+</section>
+<section id="m4l-03-a-comment-is-saved-with-its-object-name-in-front-of-its-words">
+<h2>M4L-03: a comment is saved with its object name in front of its words<a class="headerlink" href="#m4l-03-a-comment-is-saved-with-its-object-name-in-front-of-its-words" title="Link to this heading"></a></h2>
+<p><strong>Missing.</strong> <code class="docutils literal notranslate"><span class="pre">patch.place(&quot;comment</span> <span class="pre">Filter&quot;)</span></code> should make a comment that reads “Filter”.</p>
+<p><strong>Evidence.</strong> The saved box has <code class="docutils literal notranslate"><span class="pre">&quot;text&quot;:</span> <span class="pre">&quot;comment</span> <span class="pre">Filter&quot;</span></code>. Max stores only the words
+there: the comments in this repo’s own Max-saved examples read <code class="docutils literal notranslate"><span class="pre">&quot;text&quot;:</span> <span class="pre">&quot;dry&quot;</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&quot;text&quot;:</span> <span class="pre">&quot;delay&quot;</span></code>. The same happens to <code class="docutils literal notranslate"><span class="pre">live.comment</span></code>, and to every UI object, which is
+saved with a <code class="docutils literal notranslate"><span class="pre">text</span></code> key holding its own name (<code class="docutils literal notranslate"><span class="pre">&quot;text&quot;:</span> <span class="pre">&quot;live.dial&quot;</span></code>). For most UI objects
+Max ignores the stray key. For the two comment objects <code class="docutils literal notranslate"><span class="pre">text</span></code> is the content, so the
+name is displayed. <code class="docutils literal notranslate"><span class="pre">edit()</span></code> also rewrites the key, so setting it by hand has to come
+after any <code class="docutils literal notranslate"><span class="pre">edit()</span></code> call, which is how the generator found this.</p>
+<p><code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> recommends <code class="docutils literal notranslate"><span class="pre">patch.place(&quot;comment</span> <span class="pre">===</span> <span class="pre">SECTION</span> <span class="pre">NAME</span> <span class="pre">===&quot;)</span></code> for section headers,
+so this affects ordinary patches, not only devices.</p>
+<p><strong>Workaround.</strong> <code class="docutils literal notranslate"><span class="pre">obj._dict[&quot;box&quot;][&quot;text&quot;]</span> <span class="pre">=</span> <span class="pre">&quot;Filter&quot;</span></code>, after the last <code class="docutils literal notranslate"><span class="pre">edit()</span></code>.</p>
+<p><strong>Proposed fix.</strong> For <code class="docutils literal notranslate"><span class="pre">comment</span></code> and <code class="docutils literal notranslate"><span class="pre">live.comment</span></code>, save the arguments as <code class="docutils literal notranslate"><span class="pre">text</span></code>. For
+other UI objects, do not write <code class="docutils literal notranslate"><span class="pre">text</span></code> at all.</p>
+<p><strong>Test.</strong> <code class="docutils literal notranslate"><span class="pre">test_m4l_03_a_comment_saves_only_its_words</span></code> (both objects).</p>
+</section>
+<section id="m4l-04-patcher-settings-have-no-api">
+<h2>M4L-04: patcher settings have no API<a class="headerlink" href="#m4l-04-patcher-settings-have-no-api" title="Link to this heading"></a></h2>
+<p><strong>Missing.</strong> Two patcher-level keys decide how Live shows a device:
+<code class="docutils literal notranslate"><span class="pre">openinpresentation</span></code> (without it Live shows the patching view, squeezed into the device
+strip) and <code class="docutils literal notranslate"><span class="pre">devicewidth</span></code>.</p>
+<p><strong>Evidence.</strong> <code class="docutils literal notranslate"><span class="pre">MaxPatch</span></code> has no public method that reaches them. <code class="docutils literal notranslate"><span class="pre">save()</span></code> writes
+whatever the template had (<code class="docutils literal notranslate"><span class="pre">openinpresentation:</span> <span class="pre">0</span></code>).</p>
+<p><strong>Workaround.</strong> <code class="docutils literal notranslate"><span class="pre">patch._patcher_dict[&quot;patcher&quot;][&quot;openinpresentation&quot;]</span> <span class="pre">=</span> <span class="pre">1</span></code>.</p>
+<p><strong>Proposed fix.</strong> Either a general <code class="docutils literal notranslate"><span class="pre">patch.set_attribs(openinpresentation=1,</span> <span class="pre">...)</span></code>, or
+have <code class="docutils literal notranslate"><span class="pre">save(device_type=...)</span></code> turn <code class="docutils literal notranslate"><span class="pre">openinpresentation</span></code> on when any box is in
+presentation, and compute <code class="docutils literal notranslate"><span class="pre">devicewidth</span></code> from the presentation rects. The test pins the
+second option; the first would also close it once the test is adapted.</p>
+<p><strong>Test.</strong> <code class="docutils literal notranslate"><span class="pre">test_m4l_04_a_device_with_a_presentation_opens_in_it</span></code>.</p>
+</section>
+<section id="m4l-05-a-tap-link-is-not-a-type">
+<h2>M4L-05: a tap link is not a type<a class="headerlink" href="#m4l-05-a-tap-link-is-not-a-type" title="Link to this heading"></a></h2>
+<p><strong>Missing.</strong> <code class="docutils literal notranslate"><span class="pre">tapin~</span></code>’s outlet does not carry audio or numbers. It carries a tap link
+(Max’s <code class="docutils literal notranslate"><span class="pre">tapconnect</span></code>), and the only thing that understands one is <code class="docutils literal notranslate"><span class="pre">tapout~</span></code>. Every delay,
+chorus and flanger in a device is built on this pair.</p>
+<p><strong>Evidence.</strong> <code class="docutils literal notranslate"><span class="pre">tapin~</span> <span class="pre">-&gt;</span> <span class="pre">*~</span></code> is accepted by the cord check as a checked, unflagged cord.
+A <code class="docutils literal notranslate"><span class="pre">tapout~</span></code> fed by no <code class="docutils literal notranslate"><span class="pre">tapin~</span></code> is accepted too, although it has no line to read and
+outputs silence. The data already knows the outlet’s type: the xlet’s <code class="docutils literal notranslate"><span class="pre">_types</span></code> is
+<code class="docutils literal notranslate"><span class="pre">'tapconnect'</span></code>.</p>
+<p><strong>Proposed fix.</strong> Give <code class="docutils literal notranslate"><span class="pre">tapconnect</span></code> its own cord type in the cord check: an outlet of
+that type may only reach an inlet that accepts it. Add a graph rule that a <code class="docutils literal notranslate"><span class="pre">tapout~</span></code>
+must be reachable from a <code class="docutils literal notranslate"><span class="pre">tapin~</span></code> through a tap link.</p>
+<p><strong>Tests.</strong> <code class="docutils literal notranslate"><span class="pre">test_m4l_05_a_tap_link_only_fits_a_tapout</span></code>,
+<code class="docutils literal notranslate"><span class="pre">test_m4l_05_a_tapout_needs_a_tapin</span></code>.</p>
+</section>
+<section id="m4l-06-the-device-type-is-not-a-contract">
+<h2>M4L-06: the device type is not a contract<a class="headerlink" href="#m4l-06-the-device-type-is-not-a-contract" title="Link to this heading"></a></h2>
+<p><strong>Missing.</strong> <code class="docutils literal notranslate"><span class="pre">device_type</span></code> says what the device is for, which fixes what it must contain:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><code class="docutils literal notranslate"><span class="pre">device_type</span></code></p></th>
+<th class="head"><p>must read</p></th>
+<th class="head"><p>must write</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">audio_effect</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">plugin~</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">plugout~</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">instrument</span></code></p></td>
+<td><p>a MIDI input (<code class="docutils literal notranslate"><span class="pre">notein</span></code>, <code class="docutils literal notranslate"><span class="pre">midiin</span></code>)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">plugout~</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">midi_effect</span></code></p></td>
+<td><p>a MIDI input</p></td>
+<td><p>a MIDI output</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Evidence.</strong> An “instrument” that is <code class="docutils literal notranslate"><span class="pre">cycle~</span> <span class="pre">440</span> <span class="pre">-&gt;</span> <span class="pre">plugout~</span></code>, with no MIDI input at
+all, saves with no warning. So does an “audio effect” that never reads <code class="docutils literal notranslate"><span class="pre">plugin~</span></code>.</p>
+<p>Part of this is already done, and it is worth saying so: the graph check knows that
+inside a device <code class="docutils literal notranslate"><span class="pre">dac~</span></code> and <code class="docutils literal notranslate"><span class="pre">ezdac~</span></code> are not outputs, and reports audio that only reaches
+them as reaching nothing (<code class="docutils literal notranslate"><span class="pre">test_ezdac_in_a_device_is_caught</span></code>). The message does not yet
+say “use <code class="docutils literal notranslate"><span class="pre">plugout~</span></code>”.</p>
+<p><strong>Proposed fix.</strong> Treat <code class="docutils literal notranslate"><span class="pre">device_type</span></code> as a signature and check it in <code class="docutils literal notranslate"><span class="pre">save()</span></code>:
+required sources and sinks per type, each with a message that names the object to add.</p>
+<p><strong>Tests.</strong> <code class="docutils literal notranslate"><span class="pre">test_m4l_06_an_instrument_needs_midi_in</span></code>,
+<code class="docutils literal notranslate"><span class="pre">test_m4l_06_an_audio_effect_needs_audio_in</span></code>.</p>
+</section>
+<section id="m4l-07-a-parameter-s-range-is-invisible-to-the-checks">
+<span id="m4l-07-a-parameters-range-is-invisible-to-the-checks"></span><h2>M4L-07: a parameter’s range is invisible to the checks<a class="headerlink" href="#m4l-07-a-parameter-s-range-is-invisible-to-the-checks" title="Link to this heading"></a></h2>
+<p><strong>Missing.</strong> The checks type a cord by rate (audio or not). They know nothing about the
+values on it. In a device nearly every control cord starts at a dial with a declared
+range and ends at an inlet with an expected one.</p>
+<p><strong>Evidence.</strong> A dial declared as 40 to 18000 (Hz) wired into <code class="docutils literal notranslate"><span class="pre">svf~</span></code>’s resonance inlet,
+which takes 0 to 1, saves with no warning. The generator avoids this only because one
+table (<code class="docutils literal notranslate"><span class="pre">schema.json</span></code>) is the single source of each dial’s range.</p>
+<p>It then happened for real. The first version of the generator shipped four dials whose
+range ran past what the object behind them accepts, and nothing said so:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Dial</p></th>
+<th class="head"><p>Declared</p></th>
+<th class="head"><p>What the object takes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Filter Cutoff into <code class="docutils literal notranslate"><span class="pre">svf~</span></code></p></td>
+<td><p>up to 18000 Hz</p></td>
+<td><p>up to a quarter of the sample rate (11025 Hz)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Distortion Tone into <code class="docutils literal notranslate"><span class="pre">onepole~</span></code></p></td>
+<td><p>up to 18000 Hz</p></td>
+<td><p>the same</p></td>
+</tr>
+<tr class="row-even"><td><p>Reverb Damp into <code class="docutils literal notranslate"><span class="pre">onepole~</span></code></p></td>
+<td><p>up to 16000 Hz</p></td>
+<td><p>the same</p></td>
+</tr>
+<tr class="row-odd"><td><p>Distortion Drive into <code class="docutils literal notranslate"><span class="pre">overdrive~</span></code></p></td>
+<td><p>up to 12</p></td>
+<td><p>1 to 10</p></td>
+</tr>
+</tbody>
+</table>
+<p>In Live the top third of each of those dials would have turned and changed nothing. They
+were found by reading Max’s reference pages, which state each limit in prose. The limits
+are in the scraped reference data already, as text; this gap is about turning them into
+something a check can read. A fifth case was a matter of degree, not of limits: <code class="docutils literal notranslate"><span class="pre">svf~</span></code>’s
+resonance is nominally 0 to 1, and measured in Max it is flat below 0.17 and rings for
+seconds above 0.85, so the dial now maps onto 0.17 to 0.75.</p>
+<p><strong>Proposed fix.</strong> This is the refinement the formal model leaves open. A first step that
+does not need full interval typing: record the documented range of the few dozen inlets
+where it matters (resonance, feedback, gain coefficients), read the dial’s range from its
+parameter block, follow it through the arithmetic objects that have an obvious interval
+rule (<code class="docutils literal notranslate"><span class="pre">*</span> <span class="pre">k</span></code>, <code class="docutils literal notranslate"><span class="pre">+</span> <span class="pre">k</span></code>, <code class="docutils literal notranslate"><span class="pre">scale</span></code>, <code class="docutils literal notranslate"><span class="pre">!-</span> <span class="pre">k</span></code>), and warn when the intervals do not overlap. Depends
+on M4L-01.</p>
+<p><strong>Test.</strong> <code class="docutils literal notranslate"><span class="pre">test_m4l_07_a_dial_range_is_checked_against_its_inlet</span></code>.</p>
+</section>
+<section id="m4l-08-duplicate-parameter-names-are-accepted">
+<h2>M4L-08: duplicate parameter names are accepted<a class="headerlink" href="#m4l-08-duplicate-parameter-names-are-accepted" title="Link to this heading"></a></h2>
+<p><strong>Missing.</strong> Live identifies a parameter by its long name. Two parameters with the same
+long name collide: automation and mappings attach to the wrong one, and Max renames one
+of them on load.</p>
+<p><strong>Evidence.</strong> Two dials both named “Gain” save with no warning.</p>
+<p><strong>Proposed fix.</strong> A patch-level check in <code class="docutils literal notranslate"><span class="pre">save()</span></code> for devices: long names unique across
+all objects with <code class="docutils literal notranslate"><span class="pre">parameter_enable</span></code>. Depends on M4L-01.</p>
+<p><strong>Test.</strong> <code class="docutils literal notranslate"><span class="pre">test_m4l_08_parameter_names_are_unique</span></code>.</p>
+</section>
+<section id="m4l-09-output-level-is-unbounded">
+<h2>M4L-09: output level is unbounded<a class="headerlink" href="#m4l-09-output-level-is-unbounded" title="Link to this heading"></a></h2>
+<p><strong>Missing.</strong> <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> states a rule for every device: <code class="docutils literal notranslate"><span class="pre">clip~</span> <span class="pre">-1.</span> <span class="pre">1.</span></code> before
+<code class="docutils literal notranslate"><span class="pre">plugout~</span></code>, for speaker safety. It is a convention; nothing enforces it.</p>
+<p><strong>Evidence.</strong> <code class="docutils literal notranslate"><span class="pre">plugin~</span> <span class="pre">-&gt;</span> <span class="pre">*~</span> <span class="pre">4.</span> <span class="pre">-&gt;</span> <span class="pre">plugout~</span></code> saves with no warning.</p>
+<p><strong>Proposed fix.</strong> A lint in the graph check for devices: every path into <code class="docutils literal notranslate"><span class="pre">plugout~</span></code>
+passes through an object that bounds amplitude (<code class="docutils literal notranslate"><span class="pre">clip~</span></code>, <code class="docutils literal notranslate"><span class="pre">limi~</span></code>, <code class="docutils literal notranslate"><span class="pre">tanh~</span></code>,
+<code class="docutils literal notranslate"><span class="pre">overdrive~</span></code>). Reported as advice, not as an error, because a device that only
+attenuates is safe without one.</p>
+<p><strong>Test.</strong> <code class="docutils literal notranslate"><span class="pre">test_m4l_09_output_level_is_bounded</span></code>.</p>
+</section>
+<section id="m4l-10-a-parameter-that-controls-nothing-is-accepted">
+<h2>M4L-10: a parameter that controls nothing is accepted<a class="headerlink" href="#m4l-10-a-parameter-that-controls-nothing-is-accepted" title="Link to this heading"></a></h2>
+<p><strong>Missing.</strong> A <code class="docutils literal notranslate"><span class="pre">live.dial</span></code> with no cord leaving it is a knob in Live that does nothing.</p>
+<p><strong>Evidence.</strong> The graph check reports other objects whose output reaches nothing, and
+does not report a disconnected dial, because a UI object counts as a display.</p>
+<p><strong>Proposed fix.</strong> For objects with <code class="docutils literal notranslate"><span class="pre">parameter_enable</span></code>, being visible is not enough:
+require a cord from an outlet, or a <code class="docutils literal notranslate"><span class="pre">varname</span></code> that something refers to.</p>
+<p><strong>Test.</strong> <code class="docutils literal notranslate"><span class="pre">test_m4l_10_a_parameter_controls_something</span></code>.</p>
+</section>
+<section id="m4l-11-audio-objects-whose-inlets-have-no-type">
+<h2>M4L-11: audio objects whose inlets have no type<a class="headerlink" href="#m4l-11-audio-objects-whose-inlets-have-no-type" title="Link to this heading"></a></h2>
+<p><strong>Missing.</strong> A type for the inlet of about fifty audio objects, among them <code class="docutils literal notranslate"><span class="pre">tanh~</span></code>,
+<code class="docutils literal notranslate"><span class="pre">cosh~</span></code>, <code class="docutils literal notranslate"><span class="pre">sinh~</span></code>, <code class="docutils literal notranslate"><span class="pre">tanx~</span></code>, <code class="docutils literal notranslate"><span class="pre">sinx~</span></code>, <code class="docutils literal notranslate"><span class="pre">cosx~</span></code>, <code class="docutils literal notranslate"><span class="pre">receive~</span></code> and <code class="docutils literal notranslate"><span class="pre">gen~</span></code>.</p>
+<p><strong>Evidence.</strong> <code class="docutils literal notranslate"><span class="pre">cycle~</span> <span class="pre">-&gt;</span> <span class="pre">tanh~</span></code> was reported as a cord the checks could not judge
+(“no type data”), on an object that takes a signal and nothing else. The cause is
+upstream: the reference pages Max ships for these objects have a placeholder where the
+inlet type goes (<code class="docutils literal notranslate"><span class="pre">&lt;inlet</span> <span class="pre">id=&quot;0&quot;</span> <span class="pre">type=&quot;INLET_TYPE&quot;&gt;</span></code>), so the type table records the inlet
+as <code class="docutils literal notranslate"><span class="pre">any</span></code>. 53 objects in <code class="docutils literal notranslate"><span class="pre">msp-ref</span></code> have both the placeholder and an <code class="docutils literal notranslate"><span class="pre">any</span></code> inlet.</p>
+<p>It showed up as soon as the generator used <code class="docutils literal notranslate"><span class="pre">tanh~</span></code> for its tube distortion and for the
+saturating delay loop: the page’s “Type check” panel went from “all cords checked” to
+“2 not checked”.</p>
+<p><strong>Done so far.</strong> <code class="docutils literal notranslate"><span class="pre">tanh~</span></code>’s inlet is set to <code class="docutils literal notranslate"><span class="pre">signal</span></code> in <code class="docutils literal notranslate"><span class="pre">data/xlet_types.json</span></code>, by hand,
+after confirming in Max that it processes audio.</p>
+<p><strong>Proposed fix.</strong> The same pages describe each inlet in their method list
+(<code class="docutils literal notranslate"><span class="pre">&lt;method</span> <span class="pre">name=&quot;signal&quot;&gt;</span></code>), and for most of the fifty that is enough to tell a signal
+inlet from a message inlet. Use it as a fallback when the inlet type is the placeholder.</p>
+<p><strong>Tests.</strong> <code class="docutils literal notranslate"><span class="pre">test_m4l_11_tanh_is_judged</span></code> (passes), <code class="docutils literal notranslate"><span class="pre">test_m4l_11_a_cord_into_cosh_is_judged</span></code>.</p>
+</section>
+<hr class="docutils" />
+<section id="a-gap-the-checks-caught">
+<h2>A gap the checks caught<a class="headerlink" href="#a-gap-the-checks-caught" title="Link to this heading"></a></h2>
+<p>Worth recording because it is the loop working in the other direction. While the filter
+was being reworked, a control object in the generated script was given the same variable
+name as the Reso dial. Every cord written against the dial landed on the new object
+instead, so the dial fed nothing and the object fed itself. The graph check reported it
+on the next build (“hot loop through scale: every cord lands on a hot inlet”), and seven
+presets failed their test. The generator now refuses a name used twice.</p>
+</section>
+<hr class="docutils" />
+<section id="outside-the-type-system">
+<h2>Outside the type system<a class="headerlink" href="#outside-the-type-system" title="Link to this heading"></a></h2>
+<p>Found on the same pass. These are about the browser engine in <code class="docutils literal notranslate"><span class="pre">web/</span></code>, not about
+maxpylang’s types, and are listed so they are not lost.</p>
+<ul class="simple">
+<li><p><strong>The web object manifest is behind the library.</strong> <code class="docutils literal notranslate"><span class="pre">web/scripts/gen-manifest.mjs</span></code>
+no longer runs against the current <code class="docutils literal notranslate"><span class="pre">OBJ_INFO</span></code>: it refuses the <code class="docutils literal notranslate"><span class="pre">p</span></code> alias, which the
+library now has, and it does not walk the <code class="docutils literal notranslate"><span class="pre">m4l</span></code> package at all. Regenerating with both
+fixed changes the arity rule count from 46 to 87 and breaks 21 web tests, so it is its
+own piece of work. Until then the <code class="docutils literal notranslate"><span class="pre">live.*</span></code> objects the page needs are registered by
+hand (<code class="docutils literal notranslate"><span class="pre">objects/ui/live-dial.ts</span></code>, <code class="docutils literal notranslate"><span class="pre">objects/audio/plug.ts</span></code>).</p></li>
+<li><p><strong>A signal into an inlet adds to the argument instead of replacing it.</strong> In Max a
+signal connected to <code class="docutils literal notranslate"><span class="pre">*~</span> <span class="pre">0.5</span></code>’s right inlet replaces the 0.5. In the engine the signal
+is connected to an <code class="docutils literal notranslate"><span class="pre">AudioParam</span></code>, which sums with the value it already holds. The
+generator avoids the difference by giving an object no argument (or 0) wherever a
+signal drives that inlet.</p></li>
+<li><p><strong>A feedback loop runs 128 samples late in the browser.</strong> Chrome adds one render
+quantum to every cycle in the audio graph, so each repeat of a <code class="docutils literal notranslate"><span class="pre">tapin~</span></code> / <code class="docutils literal notranslate"><span class="pre">tapout~</span></code>
+echo arrived 2.9 ms after it does in Max, and a reverb built on looped delays came out
+detuned. <code class="docutils literal notranslate"><span class="pre">tapout~</span></code> now has an early read for the cords that close a loop, and <code class="docutils literal notranslate"><span class="pre">comb~</span></code>
+is a worklet with its loop inside.</p></li>
+<li><p><strong>The preview is checked against Max, not assumed.</strong> <code class="docutils literal notranslate"><span class="pre">web/scripts/maxcheck/</span></code> renders
+one test signal through the same generated patches in Max and in the engine and
+compares the recordings. The filter, every distortion type, the crusher, the delay, the
+flanger and the reverb now match a Max 9 recording to its last bit. What still differs
+(where an LFO starts, and a one-vector offset inside Max) is listed in that folder’s
+README, along with the formulas the measurements gave for <code class="docutils literal notranslate"><span class="pre">svf~</span></code>, <code class="docutils literal notranslate"><span class="pre">overdrive~</span></code>,
+<code class="docutils literal notranslate"><span class="pre">onepole~</span></code>, <code class="docutils literal notranslate"><span class="pre">degrade~</span></code>, <code class="docutils literal notranslate"><span class="pre">comb~</span></code> and <code class="docutils literal notranslate"><span class="pre">allpass~</span></code>.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="editor-setup.html" class="btn btn-neutral float-left" title="Editor setup" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="agents.html" class="btn btn-neutral float-right" title="Coding agents" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2026, Ranger Liu, Mark Santolucito and contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

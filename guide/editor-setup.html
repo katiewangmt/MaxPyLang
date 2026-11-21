@@ -1,0 +1,198 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Editor setup &mdash; MaxPyLang 0.1.1</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4da30dbd" />
+
+  
+    <link rel="canonical" href="https://barnard-pl-labs.github.io/MaxPyLang/guide/editor-setup.html" />
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=a58bc63e"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Type system: Max for Live gaps" href="type-system.html" />
+    <link rel="prev" title="Checks and warnings" href="checks.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../contents.html" class="icon icon-home">
+            MaxPyLang
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="connecting.html">Connecting objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="max-for-live.html">Max for Live</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugin-generator.html">Plugin generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="checks.html">Checks and warnings</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Editor setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#vs-code">VS Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#from-the-command-line">From the command line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#working-on-maxpylang-itself">Working on maxpylang itself</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="type-system.html">Type system: Max for Live gaps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="agents.html">Coding agents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="known-issues.html">Known issues</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/topics.html">Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../API/API.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../support.html">Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../indices.html">Indices</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">MaxPyLang</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../contents.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Editor setup</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/guide/editor-setup.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="editor-setup">
+<h1>Editor setup<a class="headerlink" href="#editor-setup" title="Link to this heading"></a></h1>
+<p>maxpylang ships type information (<code class="docutils literal notranslate"><span class="pre">py.typed</span></code> and <code class="docutils literal notranslate"><span class="pre">.pyi</span></code> stubs). With a type checker on, wrong
+cords show up in your editor before you run anything. See <a class="reference internal" href="checks.html"><span class="doc">Checks and warnings</span></a> for what is checked.</p>
+<section id="vs-code">
+<h2>VS Code<a class="headerlink" href="#vs-code" title="Link to this heading"></a></h2>
+<p>VS Code’s Python support (Pylance) does no type checking by default. Turn it on:</p>
+<ol class="arabic">
+<li><p>Select the interpreter where you installed maxpylang: <strong>Python: Select Interpreter</strong> in
+the Command Palette, then your <code class="docutils literal notranslate"><span class="pre">.venv</span></code>.</p></li>
+<li><p>Open Settings, search for <strong>Type Checking Mode</strong>, and set it to <strong>standard</strong>. Or add this to
+<code class="docutils literal notranslate"><span class="pre">.vscode/settings.json</span></code>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"python.analysis.typeCheckingMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"standard"</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">basic</span></code> also catches cord mistakes; <code class="docutils literal notranslate"><span class="pre">off</span></code>, the default, catches nothing. A wrong cord is then
+underlined in red:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Argument of type "tuple[Outlet[Signal], Inlet[Control]]" cannot be assigned to parameter "c0"
+</pre></div>
+</div>
+<p>Hovering a stub such as <code class="docutils literal notranslate"><span class="pre">cycle_tilde</span></code> shows the object’s description, arguments, and what
+each inlet and outlet takes.</p>
+</section>
+<section id="from-the-command-line">
+<h2>From the command line<a class="headerlink" href="#from-the-command-line" title="Link to this heading"></a></h2>
+<p>Any of these checks a script:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>mypy<span class="w"> </span>pyright
+mypy<span class="w"> </span>my_patch.py
+pyright<span class="w"> </span>my_patch.py
+</pre></div>
+</div>
+<p>How each reports the same mistakes:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Mistake</p></th>
+<th class="head"><p>mypy</p></th>
+<th class="head"><p>pyright / Pylance</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>audio into a message-only inlet</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Cannot</span> <span class="pre">infer</span> <span class="pre">value</span> <span class="pre">of</span> <span class="pre">type</span> <span class="pre">parameter</span> <span class="pre">&quot;_R0&quot;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Argument</span> <span class="pre">of</span> <span class="pre">type</span> <span class="pre">&quot;tuple[Outlet[Signal],</span> <span class="pre">Inlet[Control]]&quot;</span> <span class="pre">cannot</span> <span class="pre">be</span> <span class="pre">assigned</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>inlet number too high</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Tuple</span> <span class="pre">index</span> <span class="pre">out</span> <span class="pre">of</span> <span class="pre">range</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Index</span> <span class="pre">2</span> <span class="pre">is</span> <span class="pre">out</span> <span class="pre">of</span> <span class="pre">range</span> <span class="pre">for</span> <span class="pre">type</span> <span class="pre">tuple[...]</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="https://github.com/astral-sh/ty">ty</a> works too, but use version 0.0.95
+(<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">ty==0.0.95</span></code>): 0.0.96 to 0.0.98 skip the audio check.</p>
+</section>
+<section id="working-on-maxpylang-itself">
+<h2>Working on maxpylang itself<a class="headerlink" href="#working-on-maxpylang-itself" title="Link to this heading"></a></h2>
+<p>Install the repository so type checkers can follow it:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">".[dev]"</span><span class="w"> </span>--config-settings<span class="w"> </span><span class="nv">editable_mode</span><span class="o">=</span>compat
+</pre></div>
+</div>
+<p>The default editable install uses an import hook that type checkers cannot read, so they would
+see no types. After changing <code class="docutils literal notranslate"><span class="pre">maxpylang/data/xlet_types.json</span></code>, regenerate the stubs with
+<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">maxpylang.tools.typedstubs</span></code>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="checks.html" class="btn btn-neutral float-left" title="Checks and warnings" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="type-system.html" class="btn btn-neutral float-right" title="Type system: Max for Live gaps" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2026, Ranger Liu, Mark Santolucito and contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

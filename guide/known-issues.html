@@ -1,0 +1,196 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Known issues &mdash; MaxPyLang 0.1.1</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4da30dbd" />
+
+  
+    <link rel="canonical" href="https://barnard-pl-labs.github.io/MaxPyLang/guide/known-issues.html" />
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=a58bc63e"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Installation" href="../install.html" />
+    <link rel="prev" title="Coding agents" href="agents.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../contents.html" class="icon icon-home">
+            MaxPyLang
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="connecting.html">Connecting objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="max-for-live.html">Max for Live</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugin-generator.html">Plugin generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="checks.html">Checks and warnings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="editor-setup.html">Editor setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="type-system.html">Type system: Max for Live gaps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="agents.html">Coding agents</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Known issues</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#loading-a-patch-saved-by-max-fails-if-it-has-ui-objects">Loading a patch saved by Max fails if it has UI objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#frozen-max-for-live-devices-cannot-be-loaded">Frozen Max for Live devices cannot be loaded</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#two-unknown-objects-in-one-patch-overwrite-each-other">Two unknown objects in one patch overwrite each other</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#some-stubs-are-unknown-objects-silently">Some stubs are unknown objects, silently</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#js-boxes-are-written-with-the-counts-before-the-file-name"><code class="docutils literal notranslate"><span class="pre">js</span></code> boxes are written with the counts before the file name</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#comments-start-with-the-word-comment">Comments start with the word “comment”</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#random-placement-crashes">Random placement crashes</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/topics.html">Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../API/API.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../support.html">Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../indices.html">Indices</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">MaxPyLang</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../contents.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Known issues</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/guide/known-issues.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="known-issues">
+<h1>Known issues<a class="headerlink" href="#known-issues" title="Link to this heading"></a></h1>
+<p>These are bugs in maxpylang, as of the code on <code class="docutils literal notranslate"><span class="pre">main</span></code>, that change what the rest of these
+pages can promise. Each was found by running maxpylang against patches and devices saved by
+Max 9.1, and checked again against the current code.</p>
+<section id="loading-a-patch-saved-by-max-fails-if-it-has-ui-objects">
+<h2>Loading a patch saved by Max fails if it has UI objects<a class="headerlink" href="#loading-a-patch-saved-by-max-fails-if-it-has-ui-objects" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">mp.MaxPatch(load_file=...)</span></code> crashes with <code class="docutils literal notranslate"><span class="pre">KeyError:</span> <span class="pre">'text'</span></code> on any patch saved by Max that
+contains a box Max stores without a <code class="docutils literal notranslate"><span class="pre">text</span></code> field: UI objects such as <code class="docutils literal notranslate"><span class="pre">toggle</span></code>, <code class="docutils literal notranslate"><span class="pre">number</span></code>,
+<code class="docutils literal notranslate"><span class="pre">flonum</span></code>, <code class="docutils literal notranslate"><span class="pre">button</span></code>, <code class="docutils literal notranslate"><span class="pre">slider</span></code>, <code class="docutils literal notranslate"><span class="pre">dial</span></code>, <code class="docutils literal notranslate"><span class="pre">umenu</span></code>, <code class="docutils literal notranslate"><span class="pre">multislider</span></code> and <code class="docutils literal notranslate"><span class="pre">live.dial</span></code>, an empty
+<code class="docutils literal notranslate"><span class="pre">message</span></code> box, and also <code class="docutils literal notranslate"><span class="pre">inlet</span></code> and <code class="docutils literal notranslate"><span class="pre">outlet</span></code>. maxpylang expects every box to have one.</p>
+<ul class="simple">
+<li><p>Patches <strong>written by maxpylang</strong> load fine, because maxpylang always stores <code class="docutils literal notranslate"><span class="pre">text</span></code>.</p></li>
+<li><p>Patches saved by Max with only plain object boxes (<code class="docutils literal notranslate"><span class="pre">cycle~</span></code>, <code class="docutils literal notranslate"><span class="pre">metro</span></code>, …) load fine.</p></li>
+<li><p>Because <code class="docutils literal notranslate"><span class="pre">inlet</span></code> and <code class="docutils literal notranslate"><span class="pre">outlet</span></code> are among them, no abstraction saved by Max loads.</p></li>
+<li><p>Every Max-saved patch in this repository’s <code class="docutils literal notranslate"><span class="pre">examples/</span></code> folder has such boxes, and none of
+them loads.</p></li>
+</ul>
+<p>A fix is in review (<a class="reference external" href="https://github.com/Barnard-PL-Labs/MaxPyLang/pull/20">pull request #20</a>).
+Until it is merged and released, there is no workaround.</p>
+</section>
+<section id="frozen-max-for-live-devices-cannot-be-loaded">
+<h2>Frozen Max for Live devices cannot be loaded<a class="headerlink" href="#frozen-max-for-live-devices-cannot-be-loaded" title="Link to this heading"></a></h2>
+<p>When Max saves a device <em>frozen</em> (with its files embedded, which is how devices are usually
+shared), the patch is stored in a binary container rather than plain JSON. <code class="docutils literal notranslate"><span class="pre">load_amxd()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">mp.MaxPatch(load_file=&quot;device.amxd&quot;)</span></code> fail on these with <code class="docutils literal notranslate"><span class="pre">UnicodeDecodeError</span></code>. Of the 83
+devices that ship with Max 9.1, 80 are frozen.</p>
+<p>Devices <strong>written by maxpylang</strong> are never frozen and load fine. To load a device made in Max,
+unfreeze it in Max and save it again first.</p>
+</section>
+<section id="two-unknown-objects-in-one-patch-overwrite-each-other">
+<h2>Two unknown objects in one patch overwrite each other<a class="headerlink" href="#two-unknown-objects-in-one-patch-overwrite-each-other" title="Link to this heading"></a></h2>
+<p>Every unknown object shares one box record. Place two, and the saved file has two copies of the
+last one, with the same id: <code class="docutils literal notranslate"><span class="pre">place(&quot;foo1&quot;)</span></code> then <code class="docutils literal notranslate"><span class="pre">place(&quot;foo2&quot;)</span></code> saves <code class="docutils literal notranslate"><span class="pre">foo2</span></code> twice, and loading
+that file gives one object. Fix each <code class="docutils literal notranslate"><span class="pre">UnknownObjectWarning</span></code> before saving.</p>
+</section>
+<section id="some-stubs-are-unknown-objects-silently">
+<h2>Some stubs are unknown objects, silently<a class="headerlink" href="#some-stubs-are-unknown-objects-silently" title="Link to this heading"></a></h2>
+<p>About 235 of the 1,165 stubs in <code class="docutils literal notranslate"><span class="pre">maxpylang.objects</span></code> have no object data behind them, such as
+<code class="docutils literal notranslate"><span class="pre">array.*</span></code>, <code class="docutils literal notranslate"><span class="pre">string.*</span></code> and <code class="docutils literal notranslate"><span class="pre">v8</span></code>. Placed, each becomes an unknown object with no inlets, and
+<strong>no warning</strong> is raised (the <code class="docutils literal notranslate"><span class="pre">PatchCheck:</span> <span class="pre">unknown</span> <span class="pre">objects</span></code> line at <code class="docutils literal notranslate"><span class="pre">save()</span></code> does list it),
+while a type checker still sees inlets. If <code class="docutils literal notranslate"><span class="pre">len(obj.ins)</span></code> is 0, check <code class="docutils literal notranslate"><span class="pre">obj.notknown()</span></code>.</p>
+</section>
+<section id="js-boxes-are-written-with-the-counts-before-the-file-name">
+<h2><code class="docutils literal notranslate"><span class="pre">js</span></code> boxes are written with the counts before the file name<a class="headerlink" href="#js-boxes-are-written-with-the-counts-before-the-file-name" title="Link to this heading"></a></h2>
+<p>For <code class="docutils literal notranslate"><span class="pre">patch.place(&quot;js</span> <span class="pre">double.js&quot;)</span></code>, maxpylang writes the box as <code class="docutils literal notranslate"><span class="pre">js</span> <span class="pre">1</span> <span class="pre">1</span> <span class="pre">double.js</span></code>: the inlet
+and outlet counts, then the file name. Max’s reference for <code class="docutils literal notranslate"><span class="pre">js</span></code> puts the file name first, and
+every <code class="docutils literal notranslate"><span class="pre">js</span></code> box in Max’s own patches starts with the file name (<code class="docutils literal notranslate"><span class="pre">js</span> <span class="pre">double.js</span></code>). Max may not
+find the script in the box maxpylang writes. Check <code class="docutils literal notranslate"><span class="pre">js</span></code> boxes in Max after generating a patch.</p>
+</section>
+<section id="comments-start-with-the-word-comment">
+<h2>Comments start with the word “comment”<a class="headerlink" href="#comments-start-with-the-word-comment" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">patch.place(&quot;comment</span> <span class="pre">hello</span> <span class="pre">there&quot;)</span></code> writes the box text as <code class="docutils literal notranslate"><span class="pre">comment</span> <span class="pre">hello</span> <span class="pre">there</span></code>, so the
+comment shows the word “comment” in Max. (Message boxes don’t have this problem.)</p>
+</section>
+<section id="random-placement-crashes">
+<h2>Random placement crashes<a class="headerlink" href="#random-placement-crashes" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">patch.place(...,</span> <span class="pre">randpick=True)</span></code> and <code class="docutils literal notranslate"><span class="pre">spacing_type=&quot;random&quot;</span></code> raise
+<code class="docutils literal notranslate"><span class="pre">NameError:</span> <span class="pre">name</span> <span class="pre">'np'</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">defined</span></code>. Pick objects with Python’s <code class="docutils literal notranslate"><span class="pre">random</span></code> module instead, and
+place them with the default grid or with <code class="docutils literal notranslate"><span class="pre">set_position()</span></code>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="agents.html" class="btn btn-neutral float-left" title="Coding agents" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../install.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2026, Ranger Liu, Mark Santolucito and contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

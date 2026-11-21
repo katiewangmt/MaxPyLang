@@ -1,0 +1,395 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Max for Live &mdash; MaxPyLang 0.1.1</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4da30dbd" />
+
+  
+    <link rel="canonical" href="https://barnard-pl-labs.github.io/MaxPyLang/guide/max-for-live.html" />
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=a58bc63e"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Plugin generator" href="plugin-generator.html" />
+    <link rel="prev" title="Connecting objects" href="connecting.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../contents.html" class="icon icon-home">
+            MaxPyLang
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="connecting.html">Connecting objects</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Max for Live</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#live-s-i-o-not-max-s">Live’s I/O, not Max’s</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#instrument">Instrument</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#audio-effect">Audio effect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#midi-effect">MIDI effect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#without-a-maxpatch">Without a MaxPatch</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="plugin-generator.html">Plugin generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="checks.html">Checks and warnings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="editor-setup.html">Editor setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="type-system.html">Type system: Max for Live gaps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="agents.html">Coding agents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="known-issues.html">Known issues</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/topics.html">Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../API/API.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../support.html">Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../indices.html">Indices</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">MaxPyLang</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../contents.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Max for Live</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/guide/max-for-live.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="max-for-live">
+<h1>Max for Live<a class="headerlink" href="#max-for-live" title="Link to this heading"></a></h1>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>To try this without installing anything, the <a class="reference internal" href="plugin-generator.html"><span class="doc">Plugin generator</span></a> builds a Max for Live
+audio effect in your browser and downloads the <code class="docutils literal notranslate"><span class="pre">.amxd</span></code>.</p>
+</div>
+<p>A Max for Live device is a patch in a <code class="docutils literal notranslate"><span class="pre">.amxd</span></code> file that runs inside Ableton Live. Build it like
+any patch, then save it with a <code class="docutils literal notranslate"><span class="pre">device_type</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">patch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"synth.amxd"</span><span class="p">,</span> <span class="n">device_type</span><span class="o">=</span><span class="s2">"instrument"</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><code class="docutils literal notranslate"><span class="pre">device_type</span></code></p></th>
+<th class="head"><p>Goes on</p></th>
+<th class="head"><p>Input objects</p></th>
+<th class="head"><p>Output objects</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;instrument&quot;</span></code></p></td>
+<td><p>a MIDI track</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">midiin</span></code> → <code class="docutils literal notranslate"><span class="pre">midiparse</span></code>, or <code class="docutils literal notranslate"><span class="pre">notein</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">plugout~</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;audio_effect&quot;</span></code></p></td>
+<td><p>an audio track, after a device</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">plugin~</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">plugout~</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&quot;midi_effect&quot;</span></code></p></td>
+<td><p>a MIDI track, before an instrument</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">midiin</span></code> → <code class="docutils literal notranslate"><span class="pre">midiparse</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">midiformat</span></code> → <code class="docutils literal notranslate"><span class="pre">midiout</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p>Setting <code class="docutils literal notranslate"><span class="pre">device_type</span></code> always writes <code class="docutils literal notranslate"><span class="pre">.amxd</span></code>; <code class="docutils literal notranslate"><span class="pre">save(&quot;synth&quot;,</span> <span class="pre">device_type=&quot;instrument&quot;)</span></code> writes
+<code class="docutils literal notranslate"><span class="pre">synth.amxd</span></code>.</p></li>
+<li><p>Saving a <code class="docutils literal notranslate"><span class="pre">.amxd</span></code> name without <code class="docutils literal notranslate"><span class="pre">device_type</span></code> raises <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mp.MaxPatch(load_file=&quot;device.amxd&quot;)</span></code> loads a device to edit, if it was saved unfrozen
+and has no UI objects; see <a class="reference internal" href="known-issues.html"><span class="doc">Known issues</span></a>.</p></li>
+</ul>
+<section id="live-s-i-o-not-max-s">
+<span id="lives-io-not-maxs"></span><h2>Live’s I/O, not Max’s<a class="headerlink" href="#live-s-i-o-not-max-s" title="Link to this heading"></a></h2>
+<p>In a device, audio comes from and goes to Live’s track, not the sound card:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>In a Max patch</p></th>
+<th class="head"><p>In a device</p></th>
+<th class="head"><p>Why</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ezdac~</span></code>, <code class="docutils literal notranslate"><span class="pre">dac~</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">plugout~</span></code></p></td>
+<td><p>Output goes to the track’s mixer</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">adc~</span></code>, <code class="docutils literal notranslate"><span class="pre">ezadc~</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">plugin~</span></code></p></td>
+<td><p>Input comes from the track</p></td>
+</tr>
+<tr class="row-even"><td><p>a toggle on <code class="docutils literal notranslate"><span class="pre">ezdac~</span></code></p></td>
+<td><p>nothing</p></td>
+<td><p>Live runs audio; the device is always on</p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">plugin~</span></code> has two outlets and <code class="docutils literal notranslate"><span class="pre">plugout~</span></code> two inlets: left and right. Connect both for stereo.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">clip~</span> <span class="pre">-1.</span> <span class="pre">1.</span></code> before <code class="docutils literal notranslate"><span class="pre">plugout~</span></code> is an optional safety net while you experiment: it stops a
+mistake from sending very loud audio to Live. Cycling ‘74’s own devices do not use one.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Use Live’s own interface objects for a device’s controls (<code class="docutils literal notranslate"><span class="pre">live.dial</span></code>, <code class="docutils literal notranslate"><span class="pre">live.slider</span></code>,
+<code class="docutils literal notranslate"><span class="pre">live.numbox</span></code>, <code class="docutils literal notranslate"><span class="pre">live.toggle</span></code>, <code class="docutils literal notranslate"><span class="pre">live.gain~</span></code>, …): Live can show, save and automate them. They
+are stubs in <code class="docutils literal notranslate"><span class="pre">maxpylang.objects</span></code>: <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">maxpylang.objects</span> <span class="pre">import</span> <span class="pre">live_dial</span></code>. In this site’s
+browser player only <code class="docutils literal notranslate"><span class="pre">live.dial</span></code> and <code class="docutils literal notranslate"><span class="pre">live.gain~</span></code> are interactive; the others work in Max.</p>
+</div>
+</section>
+<section id="instrument">
+<h2>Instrument<a class="headerlink" href="#instrument" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">"""Max for Live instrument: MIDI note in, sine tone out."""</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">maxpylang</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">maxpylang.objects</span><span class="w"> </span><span class="kn">import</span> <span class="n">clip_tilde</span><span class="p">,</span> <span class="n">cycle_tilde</span><span class="p">,</span> <span class="n">mtof</span><span class="p">,</span> <span class="n">notein</span><span class="p">,</span> <span class="n">plugout_tilde</span>
+
+<span class="n">patch</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">MaxPatch</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">patch</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">note</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">notein</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>          <span class="c1"># outlets: pitch, velocity, channel</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+<span class="n">freq</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">mtof</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>            <span class="c1"># MIDI pitch -&gt; frequency in Hz</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>
+<span class="n">osc</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">cycle_tilde</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">210</span><span class="p">)</span>
+<span class="n">level</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="s2">"*~ 0.2"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>       <span class="c1"># quieter</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">270</span><span class="p">)</span>
+<span class="n">safe</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">clip_tilde</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># keep the output between -1 and 1</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">330</span><span class="p">)</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">plugout_tilde</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>    <span class="c1"># to Live; inlets 0 and 1 are left and right</span>
+
+<span class="n">patch</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">note</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">freq</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+    <span class="p">(</span><span class="n">freq</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">osc</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+    <span class="p">(</span><span class="n">osc</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">level</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+    <span class="p">(</span><span class="n">level</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">safe</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+    <span class="p">(</span><span class="n">safe</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">out</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+    <span class="p">(</span><span class="n">safe</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">out</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+<span class="p">)</span>
+
+<span class="n">patch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"sine_instrument.amxd"</span><span class="p">,</span> <span class="n">device_type</span><span class="o">=</span><span class="s2">"instrument"</span><span class="p">)</span>
+
+<span class="c1"># .amxd files load like .maxpat files.</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">MaxPatch</span><span class="p">(</span><span class="n">load_file</span><span class="o">=</span><span class="s2">"sine_instrument.amxd"</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">device</span><span class="o">.</span><span class="n">num_objs</span><span class="p">,</span> <span class="s2">"objects"</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="audio-effect">
+<h2>Audio effect<a class="headerlink" href="#audio-effect" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">"""Max for Live audio effect: a tremolo on both channels."""</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">maxpylang</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">maxpylang.objects</span><span class="w"> </span><span class="kn">import</span> <span class="n">clip_tilde</span><span class="p">,</span> <span class="n">cycle_tilde</span><span class="p">,</span> <span class="n">plugin_tilde</span><span class="p">,</span> <span class="n">plugout_tilde</span>
+
+<span class="n">patch</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">MaxPatch</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">patch</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">src</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">plugin_tilde</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>    <span class="c1"># from Live; outlets 0 and 1 are left and right</span>
+
+<span class="c1"># LFO: cycle~ swings -1..1; scale it to 0..1 for a volume control.</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">lfo</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">cycle_tilde</span><span class="p">(</span><span class="mi">4</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+<span class="n">half</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="s2">"*~ 0.5"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>
+<span class="n">offset</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="s2">"+~ 0.5"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">patch</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">210</span><span class="p">)</span>
+<span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="s2">"*~"</span><span class="p">,</span> <span class="n">num_objs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="p">[</span><span class="mi">80</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">270</span><span class="p">)</span>
+<span class="n">safe_l</span><span class="p">,</span> <span class="n">safe_r</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">clip_tilde</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="n">num_objs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="p">[</span><span class="mi">80</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">330</span><span class="p">)</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">plugout_tilde</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">patch</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">lfo</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">half</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+    <span class="p">(</span><span class="n">half</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">offset</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+    <span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">left</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+    <span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">right</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+    <span class="p">(</span><span class="n">offset</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">left</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>     <span class="c1"># audio into the right inlet of *~ sets the gain</span>
+    <span class="p">(</span><span class="n">offset</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">right</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+    <span class="p">(</span><span class="n">left</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">safe_l</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+    <span class="p">(</span><span class="n">right</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">safe_r</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+<span class="p">)</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">safe_l</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">out</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="p">(</span><span class="n">safe_r</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">out</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+<span class="n">patch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"tremolo.amxd"</span><span class="p">,</span> <span class="n">device_type</span><span class="o">=</span><span class="s2">"audio_effect"</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="midi-effect">
+<h2>MIDI effect<a class="headerlink" href="#midi-effect" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">midiparse</span></code> splits raw MIDI by kind, one outlet each, and <code class="docutils literal notranslate"><span class="pre">midiformat</span></code> builds MIDI from the
+same kinds, one inlet each, in nearly the same order. The first of each carries notes as a
+two-item list, pitch then velocity; the second is poly key pressure, not velocity. So to change
+notes, unpack the list, change it, and pack it again before <code class="docutils literal notranslate"><span class="pre">midiformat</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">"""Max for Live MIDI effect: transpose every note up 7 semitones."""</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">maxpylang</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">maxpylang.objects</span><span class="w"> </span><span class="kn">import</span> <span class="n">midiformat</span><span class="p">,</span> <span class="n">midiin</span><span class="p">,</span> <span class="n">midiout</span><span class="p">,</span> <span class="n">midiparse</span>
+
+<span class="n">patch</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">MaxPatch</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">patch</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">src</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">midiin</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>           <span class="c1"># raw MIDI from the track</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+<span class="n">parse</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">midiparse</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>      <span class="c1"># outlet 0: notes, as a list (pitch, velocity)</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>
+<span class="n">split</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="s2">"unpack 0 0"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>   <span class="c1"># sends velocity (right) first, then pitch (left)</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">210</span><span class="p">)</span>
+<span class="n">up</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="s2">"+ 7"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">270</span><span class="p">)</span>
+<span class="n">join</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="s2">"pack 0 0"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>      <span class="c1"># velocity waits in the right inlet; pitch sends the pair</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">330</span><span class="p">)</span>
+<span class="n">fmt</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">midiformat</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>       <span class="c1"># inlet 0: notes, as a list (pitch, velocity)</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">390</span><span class="p">)</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">midiout</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>          <span class="c1"># to the next device on the track</span>
+
+<span class="n">patch</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">src</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">parse</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+    <span class="p">(</span><span class="n">parse</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">split</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+    <span class="p">(</span><span class="n">split</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">up</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+    <span class="p">(</span><span class="n">split</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">join</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+    <span class="p">(</span><span class="n">up</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">join</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+    <span class="p">(</span><span class="n">join</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">fmt</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+    <span class="p">(</span><span class="n">fmt</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">out</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+<span class="p">)</span>
+
+<span class="n">patch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"transpose.amxd"</span><span class="p">,</span> <span class="n">device_type</span><span class="o">=</span><span class="s2">"midi_effect"</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Port</p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">midiparse</span></code> outlet</p></th>
+<th class="head"><p><code class="docutils literal notranslate"><span class="pre">midiformat</span></code> inlet</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>notes: list (pitch, velocity)</p></td>
+<td><p>notes: list (pitch, velocity)</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>poly key pressure: list (key, value)</p></td>
+<td><p>poly key pressure: list (value, key)</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>control change: list (number, value)</p></td>
+<td><p>control change: list (number, value)</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>program change</p></td>
+<td><p>program change</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>aftertouch</p></td>
+<td><p>aftertouch</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>pitch bend</p></td>
+<td><p>pitch bend</p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>MIDI channel</p></td>
+<td><p>MIDI channel (sets it, sends nothing)</p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">midievent</span></code> message</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p>Note that poly key pressure is in opposite orders. The <code class="docutils literal notranslate"><span class="pre">unpack</span></code> → <code class="docutils literal notranslate"><span class="pre">pack</span></code> pattern works because
+<code class="docutils literal notranslate"><span class="pre">unpack</span></code> sends its rightmost element first, so velocity is waiting in <code class="docutils literal notranslate"><span class="pre">pack</span></code> before pitch
+arrives and sends the pair.</p>
+</section>
+<section id="without-a-maxpatch">
+<h2>Without a MaxPatch<a class="headerlink" href="#without-a-maxpatch" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">save_amxd</span></code> and <code class="docutils literal notranslate"><span class="pre">load_amxd</span></code> convert between a <code class="docutils literal notranslate"><span class="pre">.amxd</span></code> file and the patch’s JSON, for when you
+change the JSON yourself:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">maxpylang</span><span class="w"> </span><span class="kn">import</span> <span class="n">save_amxd</span><span class="p">,</span> <span class="n">load_amxd</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">load_amxd</span><span class="p">(</span><span class="s2">"sine_instrument.amxd"</span><span class="p">)</span>      <span class="c1"># the patcher JSON as a dict</span>
+<span class="n">save_amxd</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s2">"copy.amxd"</span><span class="p">,</span> <span class="n">device_type</span><span class="o">=</span><span class="s2">"instrument"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A <code class="docutils literal notranslate"><span class="pre">.amxd</span></code> file written by maxpylang is the same JSON as a <code class="docutils literal notranslate"><span class="pre">.maxpat</span></code>, wrapped in three binary
+chunks: <code class="docutils literal notranslate"><span class="pre">ampf</span></code> (the device type: <code class="docutils literal notranslate"><span class="pre">aaaa</span></code>, <code class="docutils literal notranslate"><span class="pre">iiii</span></code> or <code class="docutils literal notranslate"><span class="pre">mmmm</span></code>), <code class="docutils literal notranslate"><span class="pre">meta</span></code> (maxpylang writes zeros), and
+<code class="docutils literal notranslate"><span class="pre">ptch</span></code> (the JSON). Devices Max saves <em>frozen</em> store a binary container in <code class="docutils literal notranslate"><span class="pre">ptch</span></code> instead, which
+these functions cannot read; see <a class="reference internal" href="known-issues.html"><span class="doc">Known issues</span></a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="connecting.html" class="btn btn-neutral float-left" title="Connecting objects" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="plugin-generator.html" class="btn btn-neutral float-right" title="Plugin generator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2026, Ranger Liu, Mark Santolucito and contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

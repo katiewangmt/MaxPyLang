@@ -1,0 +1,355 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checks and warnings &mdash; MaxPyLang 0.1.1</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4da30dbd" />
+
+  
+    <link rel="canonical" href="https://barnard-pl-labs.github.io/MaxPyLang/guide/checks.html" />
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=a58bc63e"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Editor setup" href="editor-setup.html" />
+    <link rel="prev" title="Plugin generator" href="plugin-generator.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../contents.html" class="icon icon-home">
+            MaxPyLang
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="connecting.html">Connecting objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="max-for-live.html">Max for Live</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plugin-generator.html">Plugin generator</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Checks and warnings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#unknown-objects">Unknown objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#audio-into-an-inlet-that-takes-none">Audio into an inlet that takes none</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-shape-of-the-patch">The shape of the patch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-patchcheck-report">The <code class="docutils literal notranslate"><span class="pre">PatchCheck</span></code> report</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example">Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#type-checks-as-you-type">Type checks as you type</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="editor-setup.html">Editor setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="type-system.html">Type system: Max for Live gaps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="agents.html">Coding agents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="known-issues.html">Known issues</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/topics.html">Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../API/API.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../support.html">Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../indices.html">Indices</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">MaxPyLang</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../contents.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Checks and warnings</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/guide/checks.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="checks-and-warnings">
+<h1>Checks and warnings<a class="headerlink" href="#checks-and-warnings" title="Link to this heading"></a></h1>
+<p>maxpylang checks a patch at four moments. Each catches different mistakes.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>When</p></th>
+<th class="head"><p>What is caught</p></th>
+<th class="head"><p>How you see it</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>As you type (type checker)</p></td>
+<td><p>audio into an inlet that takes none; an inlet or outlet number past the object’s count</p></td>
+<td><p>an error in your editor or from <code class="docutils literal notranslate"><span class="pre">mypy</span></code>/<code class="docutils literal notranslate"><span class="pre">pyright</span></code>/<code class="docutils literal notranslate"><span class="pre">ty</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>When you place an object</p></td>
+<td><p>a name Max does not have</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">UnknownObjectWarning</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>When you connect</p></td>
+<td><p>a cord that sends audio into an inlet that takes none</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ConnectionWarning</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>When you save</p></td>
+<td><p>the shape of the patch: a hot loop, audio feedback with no delay, an object whose output reaches nothing; plus missing files</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GraphWarning</span></code>, and the <code class="docutils literal notranslate"><span class="pre">PatchCheck:</span></code> report</p></td>
+</tr>
+</tbody>
+</table>
+<p>The warnings come from Python’s <code class="docutils literal notranslate"><span class="pre">warnings</span></code> module, so they print where your script ran and
+the script carries on. To stop at the first one instead, make them errors:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">maxpylang</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConnectionWarning</span><span class="p">,</span> <span class="n">GraphWarning</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">maxpylang.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">UnknownObjectWarning</span>
+
+<span class="k">for</span> <span class="n">kind</span> <span class="ow">in</span> <span class="p">(</span><span class="n">UnknownObjectWarning</span><span class="p">,</span> <span class="n">ConnectionWarning</span><span class="p">,</span> <span class="n">GraphWarning</span><span class="p">):</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">"error"</span><span class="p">,</span> <span class="n">kind</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="unknown-objects">
+<h2>Unknown objects<a class="headerlink" href="#unknown-objects" title="Link to this heading"></a></h2>
+<p>A name maxpylang does not know, often a typo, gives a warning:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>UnknownObjectWarning: Unknown Max object: 'cycel~'
+</pre></div>
+</div>
+<p>The object is still placed, with <strong>no inlets or outlets</strong>, so every later <code class="docutils literal notranslate"><span class="pre">connect()</span></code> to it
+fails. Fix the name rather than carrying on. <code class="docutils literal notranslate"><span class="pre">obj.notknown()</span></code> returns <code class="docutils literal notranslate"><span class="pre">True</span></code> for such an
+object. See also <a class="reference internal" href="../topics/unknown_objs.html"><span class="doc">Unknown objects</span></a>.</p>
+</section>
+<section id="audio-into-an-inlet-that-takes-none">
+<h2>Audio into an inlet that takes none<a class="headerlink" href="#audio-into-an-inlet-that-takes-none" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">connect()</span></code> checks each cord as you make it, whichever way you write it (strings or stubs,
+tuples or lists). A cord from an audio outlet into an inlet that only takes messages gives:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ConnectionWarning: cycle~ (obj-1) outlet 0 sends audio, but flonum (obj-2) inlet 0 takes no
+audio. Max keeps the cord and only prints a console warning. To use audio as numbers, go
+through snapshot~.
+</pre></div>
+</div>
+<p>The cord is still made, as Max would make it. Messages into an audio inlet are always fine,
+because most audio inlets also take numbers. To read an audio value as a number, put
+<code class="docutils literal notranslate"><span class="pre">snapshot~</span></code> in between.</p>
+</section>
+<section id="the-shape-of-the-patch">
+<h2>The shape of the patch<a class="headerlink" href="#the-shape-of-the-patch" title="Link to this heading"></a></h2>
+<p>At <code class="docutils literal notranslate"><span class="pre">save()</span></code>, maxpylang looks at the whole patch, not one cord at a time, and gives a
+<code class="docutils literal notranslate"><span class="pre">GraphWarning</span></code> for:</p>
+<ul class="simple">
+<li><p><strong>a hot loop</strong>: a message cycle where every cord lands on a hot inlet, so one message loops
+without end and locks Max up (send one cord into a cold inlet, or put <code class="docutils literal notranslate"><span class="pre">deferlow</span></code> or <code class="docutils literal notranslate"><span class="pre">delay</span></code>
+in the loop);</p></li>
+<li><p><strong>audio feedback with no delay</strong>, which Max can’t compute (put a delay in the loop:
+<code class="docutils literal notranslate"><span class="pre">tapin~</span></code> and <code class="docutils literal notranslate"><span class="pre">tapout~</span></code>, or <code class="docutils literal notranslate"><span class="pre">send~</span></code> and <code class="docutils literal notranslate"><span class="pre">receive~</span></code>);</p></li>
+<li><p><strong>an object whose output reaches nothing</strong>: no speakers, display or other effect, usually
+a missing cord. For example: <code class="docutils literal notranslate"><span class="pre">GraphWarning:</span> <span class="pre">cycle~</span> <span class="pre">(obj-1)</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">connected</span> <span class="pre">to</span> <span class="pre">anything.</span></code></p></li>
+</ul>
+</section>
+<section id="the-patchcheck-report">
+<h2>The <code class="docutils literal notranslate"><span class="pre">PatchCheck</span></code> report<a class="headerlink" href="#the-patchcheck-report" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">save()</span></code> ends with a report like this (blank lines between the lines left out):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>PatchCheck: unknown objects : no unknown objects
+PatchCheck: unlinked js objects : no unlinked js objects
+PatchCheck: linked js objects (files must be in same folder as patch file): no linked js objects
+PatchCheck: linked abstractions (files must be in same folder as patch file): no linked abstractions
+PatchCheck: cords : 1 cord, 0 sending audio into an inlet that takes none, 0 not checked (no type data)
+PatchCheck: graph : 0 hot loops, 0 audio feedback loops with no delay, 0 parts of the patch whose output reaches nothing
+maxpatch saved to checked.maxpat
+</pre></div>
+</div>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Line</p></th>
+<th class="head"><p>Means</p></th>
+<th class="head"><p>Do</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">unknown</span> <span class="pre">objects</span></code></p></td>
+<td><p>objects maxpylang does not know; listed by id and text</p></td>
+<td><p>fix the names</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">unlinked</span> <span class="pre">js</span> <span class="pre">objects</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">js</span></code> boxes whose <code class="docutils literal notranslate"><span class="pre">.js</span></code> file was not found</p></td>
+<td><p>put the file in the folder you run the script from, or <code class="docutils literal notranslate"><span class="pre">obj.link(&quot;file.js&quot;)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">linked</span> <span class="pre">js</span> <span class="pre">objects</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">js</span></code> files the patch uses</p></td>
+<td><p>copy them with the patch</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">linked</span> <span class="pre">abstractions</span></code></p></td>
+<td><p>other <code class="docutils literal notranslate"><span class="pre">.maxpat</span></code> files the patch uses</p></td>
+<td><p>copy them with the patch</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cords</span></code></p></td>
+<td><p>how many cords were checked, how many send audio where it can’t go, and how many could not be judged</p></td>
+<td><p>fix each <code class="docutils literal notranslate"><span class="pre">ConnectionWarning</span></code>; “not checked” means maxpylang has no type data for that object</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">graph</span></code></p></td>
+<td><p>hot loops, audio feedback, and parts whose output reaches nothing</p></td>
+<td><p>fix each <code class="docutils literal notranslate"><span class="pre">GraphWarning</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">patch.save(...,</span> <span class="pre">check=False)</span></code> skips the report and the patch-shape checks.
+<code class="docutils literal notranslate"><span class="pre">patch.check()</span></code> runs the same checks and prints the report at any time.</p>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">"""Checks: catch a misspelled object and a wrong cord, then save a patch that passes."""</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">maxpylang</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">maxpylang</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConnectionWarning</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">maxpylang.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">UnknownObjectWarning</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">maxpylang.objects</span><span class="w"> </span><span class="kn">import</span> <span class="n">cycle_tilde</span><span class="p">,</span> <span class="n">ezdac_tilde</span><span class="p">,</span> <span class="n">flonum</span>
+
+<span class="c1"># Turn the warnings into errors, so a mistake stops the script at the line that made it.</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">"error"</span><span class="p">,</span> <span class="n">UnknownObjectWarning</span><span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">"error"</span><span class="p">,</span> <span class="n">ConnectionWarning</span><span class="p">)</span>
+
+<span class="n">patch</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">MaxPatch</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="s2">"cycel~ 440"</span><span class="p">)</span>  <span class="c1"># typo for cycle~</span>
+<span class="k">except</span> <span class="n">UnknownObjectWarning</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"caught:"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+
+<span class="n">osc</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">cycle_tilde</span><span class="p">(</span><span class="mi">440</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">shown</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">flonum</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># Audio into a number box (it needs snapshot~); a type checker flags this line too.</span>
+    <span class="n">patch</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">osc</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">shown</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>  <span class="c1"># error</span>
+<span class="k">except</span> <span class="n">ConnectionWarning</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"caught:"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># delete() takes object ids ("obj-1"), the keys of patch.objs.</span>
+<span class="n">shown_id</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">obj_id</span> <span class="k">for</span> <span class="n">obj_id</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">patch</span><span class="o">.</span><span class="n">objs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="n">shown</span><span class="p">)</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">objs</span><span class="o">=</span><span class="p">[</span><span class="n">shown_id</span><span class="p">])</span>
+
+<span class="n">out</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">ezdac_tilde</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">osc</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">out</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="p">(</span><span class="n">osc</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">out</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+<span class="c1"># save() checks the whole patch (GraphWarning) and prints the PatchCheck report.</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"checked"</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="type-checks-as-you-type">
+<h2>Type checks as you type<a class="headerlink" href="#type-checks-as-you-type" title="Link to this heading"></a></h2>
+<p>The stubs in <code class="docutils literal notranslate"><span class="pre">maxpylang.objects</span></code> record, for each object, how many inlets and outlets it has
+and whether each one carries audio or messages. A type checker reads that and flags cords
+that cannot work, before you run anything:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">"""Mistakes a type checker catches. Every line ending in `# error` is flagged by</span>
+<span class="sd">mypy, pyright and ty; the docs build checks that. Do not run this file with python."""</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">maxpylang</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">maxpylang.objects</span><span class="w"> </span><span class="kn">import</span> <span class="n">cycle_tilde</span><span class="p">,</span> <span class="n">ezdac_tilde</span><span class="p">,</span> <span class="n">flonum</span><span class="p">,</span> <span class="n">toggle</span>
+
+<span class="n">patch</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">MaxPatch</span><span class="p">()</span>
+<span class="n">osc</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">cycle_tilde</span><span class="p">(</span><span class="mi">440</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">num</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">flonum</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">tog</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">toggle</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">dac</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">ezdac_tilde</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">patch</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">osc</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">num</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>  <span class="c1"># error</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">osc</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tog</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>  <span class="c1"># error</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">osc</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dac</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>  <span class="c1"># error</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">osc</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dac</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</pre></div>
+</div>
+<p>What each rate means:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Rate</p></th>
+<th class="head"><p>Carries</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Control</span></code></p></td>
+<td><p>messages: numbers, symbols, lists, bang</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Matrix</span></code></p></td>
+<td><p>a Jitter matrix (a kind of <code class="docutils literal notranslate"><span class="pre">Control</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Signal</span></code></p></td>
+<td><p>MSP audio</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">MCSignal</span></code></p></td>
+<td><p>multichannel audio (a kind of <code class="docutils literal notranslate"><span class="pre">Signal</span></code>)</p></td>
+</tr>
+</tbody>
+</table>
+<p>An error naming <code class="docutils literal notranslate"><span class="pre">Outlet[Signal]</span></code> and <code class="docutils literal notranslate"><span class="pre">Inlet[Control]</span></code> means audio is going into an inlet that
+takes only messages: the same mistake <code class="docutils literal notranslate"><span class="pre">ConnectionWarning</span></code> reports when the script runs.</p>
+<p><strong>What the type checker does not check</strong> (running the script still does):</p>
+<ul class="simple">
+<li><p>objects placed by string, <code class="docutils literal notranslate"><span class="pre">patch.place(&quot;cycle~</span> <span class="pre">440&quot;)</span></code>;</p></li>
+<li><p>cords written as lists, <code class="docutils literal notranslate"><span class="pre">[outlet,</span> <span class="pre">inlet]</span></code>, and calls with more than eight cords: the audio
+check is skipped, but inlet numbers are still checked;</p></li>
+<li><p>inlets or outlets whose count depends on the object’s arguments, such as <code class="docutils literal notranslate"><span class="pre">vst~</span></code>’s outlets:
+any number passes.</p></li>
+</ul>
+<p>Set up your editor as in <a class="reference internal" href="editor-setup.html"><span class="doc">Editor setup</span></a> to see these errors as you type.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="plugin-generator.html" class="btn btn-neutral float-left" title="Plugin generator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="editor-setup.html" class="btn btn-neutral float-right" title="Editor setup" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2026, Ranger Liu, Mark Santolucito and contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

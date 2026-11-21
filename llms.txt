@@ -1,0 +1,34 @@
+# MaxPyLang
+
+> MaxPyLang is a Python package that writes Max (MaxMSP) patches: place objects, connect them, and save a .maxpat file, or a .amxd Max for Live device.
+
+Key rules:
+- `patch.place()` always returns a list; use `[0]` for one object.
+- Connect with tuples, `patch.connect((src.outs[0], dst.ins[0]))`. Inlets and outlets are 0-based.
+- Prefer stubs from `maxpylang.objects` (`cycle_tilde(440)`) so a type checker can check cords.
+- Run the script and fix every `UnknownObjectWarning`, `ConnectionWarning` and `GraphWarning`; an unknown object has no inlets or outlets.
+- A type checker (mypy, pyright) catches cord mistakes before the script runs, for stub-and-tuple code.
+- Loading patches saved by Max usually fails until pull request #20 is released; build patches from scratch. See "Known issues".
+- Use ezdac~ in examples that should play in the browser; dac~ is silent there.
+
+## Docs
+
+- [Object reference](https://barnard-pl-labs.github.io/MaxPyLang/): Max objects by category, each with a maxpylang example you can play and edit in the browser.
+- [Getting started](https://barnard-pl-labs.github.io/MaxPyLang/guide/getting-started.html): Install, write a first patch, save it, load it back, and lay it out.
+- [Connecting objects](https://barnard-pl-labs.github.io/MaxPyLang/guide/connecting.html): place() returns a list; 0-based inlets and outlets; connect() with tuples; stubs and their Python names.
+- [Max for Live](https://barnard-pl-labs.github.io/MaxPyLang/guide/max-for-live.html): Save .amxd devices with device_type; Live's I/O objects; instrument and audio effect examples.
+- [Plugin generator](https://barnard-pl-labs.github.io/MaxPyLang/guide/plugin-generator.html): Build a Max for Live audio effect in the browser with maxpylang, hear it on a clip, and download the .amxd.
+- [Checks and warnings](https://barnard-pl-labs.github.io/MaxPyLang/guide/checks.html): UnknownObjectWarning, ConnectionWarning and GraphWarning, the PatchCheck report save() prints, and type checks in your editor.
+- [Editor setup](https://barnard-pl-labs.github.io/MaxPyLang/guide/editor-setup.html): Turn on type checking in VS Code (Type Checking Mode set to standard), or run mypy or pyright.
+- [Type system: Max for Live gaps](https://barnard-pl-labs.github.io/MaxPyLang/guide/type-system.html): What maxpylang's type system can't yet express or check about Max for Live devices: the gap log the plugin generator keeps.
+- [Coding agents](https://barnard-pl-labs.github.io/MaxPyLang/guide/agents.html): Give a coding agent these docs, run maxpylang setup-agent, and what to ask it to check.
+- [Known issues](https://barnard-pl-labs.github.io/MaxPyLang/guide/known-issues.html): Bugs in maxpylang that change what works: loading patches saved by Max, frozen devices, js and comment boxes, unknown objects, random placement.
+- [Installation](https://barnard-pl-labs.github.io/MaxPyLang/install.html): PyPI and source installs, and fixing a missing module.
+- [Unknown objects](https://barnard-pl-labs.github.io/MaxPyLang/topics/unknown_objs.html): Names maxpylang does not know, what happens to them, and how to replace them.
+- [Linked files: abstractions and js](https://barnard-pl-labs.github.io/MaxPyLang/topics/linked_files.html): Abstractions and js objects, whose files must sit next to the patch.
+- [Objects from packages](https://barnard-pl-labs.github.io/MaxPyLang/topics/ext_packages.html): import_objs() for objects from Max packages.
+- [API reference](https://barnard-pl-labs.github.io/MaxPyLang/API/API.html): every public class and function.
+
+## Optional
+
+- [llms-full.txt](https://barnard-pl-labs.github.io/MaxPyLang/llms-full.txt): all of the above, with the API reference, as one Markdown file.

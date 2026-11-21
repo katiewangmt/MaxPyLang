@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Inline so the page asks the server for nothing it does not need: a missing
+      favicon.ico is a 404 in every visitor's console. Two stacked boxes and a cord. -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' rx='3' fill='%2316181c'/><rect x='3' y='2.5' width='10' height='3.5' rx='1' fill='%235aa9e6'/><rect x='3' y='10' width='10' height='3.5' rx='1' fill='%23e8b73e'/><path d='M5.5 6v4' stroke='%234bd08a' stroke-width='1.3'/></svg>" />
+    <!--
+      The Studio is now the patcher's Python drawer, so this URL lands on the app with
+      that drawer already open (`#python`, handled by src/patcher/main.ts) — the old
+      entry point still does what its name promised. Kept rather than deleted because the
+      URL was announced and could be bookmarked. No script, deliberately: a redirect that
+      depends on a bundle is a redirect that can fail to load.
+    -->
+    <meta http-equiv="refresh" content="0; url=./index.html#python" />
+    <title>MaxPy Studio — moved</title>
+    <style>
+      html, body { height: 100%; margin: 0; background: #16181c; }
+      body {
+        display: grid; place-items: center;
+        font: 14px/1.6 system-ui, -apple-system, sans-serif; color: #8b93a0;
+      }
+      p { margin: 0; text-align: center; }
+      a { color: #5aa9e6; }
+    </style>
+  </head>
+  <body>
+    <p>
+      The Studio is now the Python drawer inside MaxPy (⌘J).<br />
+      <a href="./index.html#python">Continue, with the drawer open →</a>
+    </p>
+  </body>
+</html>

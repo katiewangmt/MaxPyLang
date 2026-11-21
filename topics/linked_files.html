@@ -1,0 +1,197 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Linked files: abstractions and js &mdash; MaxPyLang 0.1.1</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4da30dbd" />
+
+  
+    <link rel="canonical" href="https://barnard-pl-labs.github.io/MaxPyLang/topics/linked_files.html" />
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=a58bc63e"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Objects from packages" href="ext_packages.html" />
+    <link rel="prev" title="Unknown objects" href="unknown_objs.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../contents.html" class="icon icon-home">
+            MaxPyLang
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../guide/getting-started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/connecting.html">Connecting objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/max-for-live.html">Max for Live</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/plugin-generator.html">Plugin generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/checks.html">Checks and warnings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/editor-setup.html">Editor setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/type-system.html">Type system: Max for Live gaps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/agents.html">Coding agents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide/known-issues.html">Known issues</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">More</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="topics.html">Topics</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="unknown_objs.html">Unknown objects</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Linked files: abstractions and <code class="docutils literal notranslate"><span class="pre">js</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="ext_packages.html">Objects from packages</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../API/API.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../support.html">Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../indices.html">Indices</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">MaxPyLang</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../contents.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="topics.html">Topics</a></li>
+      <li class="breadcrumb-item active">Linked files: abstractions and <code class="docutils literal notranslate"><span class="pre">js</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/topics/linked_files.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="linked-files-abstractions-and-js">
+<h1>Linked files: abstractions and <code class="docutils literal notranslate"><span class="pre">js</span></code><a class="headerlink" href="#linked-files-abstractions-and-js" title="Link to this heading"></a></h1>
+<p>Some boxes depend on another file next to the patch:</p>
+<ul class="simple">
+<li><p>an <strong>abstraction</strong>, a box named after another patch (<code class="docutils literal notranslate"><span class="pre">half_gain</span></code> uses <code class="docutils literal notranslate"><span class="pre">half_gain.maxpat</span></code>);</p></li>
+<li><p>a <strong><code class="docutils literal notranslate"><span class="pre">js</span></code> object</strong>, which runs a JavaScript file (<code class="docutils literal notranslate"><span class="pre">js</span> <span class="pre">double.js</span></code>).</p></li>
+</ul>
+<p>maxpylang reads those files to learn how many inlets and outlets the box has, so they must be
+<strong>in the current folder when the script runs</strong>. Copy them along with the saved patch: Max looks
+for them next to it too.</p>
+<p>If the abstraction does not exist yet, declare its inlets and outlets yourself:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">reverb</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">MaxObject</span><span class="p">(</span><span class="s2">"my_reverb"</span><span class="p">,</span> <span class="n">abstraction</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inlets</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">outlets</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">reverb</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>maxpylang writes a <code class="docutils literal notranslate"><span class="pre">js</span></code> box with its inlet and outlet counts before the file name
+(<code class="docutils literal notranslate"><span class="pre">js</span> <span class="pre">1</span> <span class="pre">1</span> <span class="pre">double.js</span></code>), while Max puts the file name first. Check <code class="docutils literal notranslate"><span class="pre">js</span></code> boxes in Max; see
+<a class="reference internal" href="../guide/known-issues.html"><span class="doc">Known issues</span></a>.</p>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">obj.link(&quot;file.js&quot;)</span></code> links a <code class="docutils literal notranslate"><span class="pre">js</span></code> box, or an abstraction, to a file after it is placed.
+<code class="docutils literal notranslate"><span class="pre">save()</span></code> lists every linked and unlinked file in its <code class="docutils literal notranslate"><span class="pre">PatchCheck</span></code> report.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">"""Linked files: build an abstraction, use it in another patch, and link a js file."""</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">maxpylang</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mp</span>
+
+<span class="c1"># 1. An abstraction is a patch saved next to the patch that uses it.</span>
+<span class="c1">#    Its inlet and outlet objects become the box's inlets and outlets.</span>
+<span class="n">sub</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">MaxPatch</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">sub</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">src</span> <span class="o">=</span> <span class="n">sub</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="s2">"inlet"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">sub</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+<span class="n">amp</span> <span class="o">=</span> <span class="n">sub</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="s2">"*~ 0.5"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">sub</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>
+<span class="n">dst</span> <span class="o">=</span> <span class="n">sub</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="s2">"outlet"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">sub</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">src</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">amp</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="p">(</span><span class="n">amp</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dst</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="n">sub</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"half_gain"</span><span class="p">,</span> <span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># 2. Place it by name. maxpylang finds half_gain.maxpat in the current folder.</span>
+<span class="n">patch</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">MaxPatch</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">osc</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="s2">"cycle~ 440"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+<span class="n">half</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="s2">"half_gain"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"half_gain:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">half</span><span class="o">.</span><span class="n">ins</span><span class="p">),</span> <span class="s2">"inlet,"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">half</span><span class="o">.</span><span class="n">outs</span><span class="p">),</span> <span class="s2">"outlet"</span><span class="p">)</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">osc</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">half</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+<span class="c1"># 3. An abstraction that does not exist yet: declare its inlets and outlets.</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+<span class="n">later</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">mp</span><span class="o">.</span><span class="n">MaxObject</span><span class="p">(</span><span class="s2">"my_reverb"</span><span class="p">,</span> <span class="n">abstraction</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inlets</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">outlets</span><span class="o">=</span><span class="mi">2</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">half</span><span class="o">.</span><span class="n">outs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">later</span><span class="o">.</span><span class="n">ins</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+<span class="c1"># 4. A js object reads its inlet and outlet counts from the .js file.</span>
+<span class="c1">#    Check js boxes in Max: maxpylang writes the counts before the file name.</span>
+<span class="n">Path</span><span class="p">(</span><span class="s2">"double.js"</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s2">"inlets = 1;</span><span class="se">\n</span><span class="s2">outlets = 1;</span><span class="se">\n</span><span class="s2">function msg_float(x) { outlet(0, x * 2); }</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">js</span> <span class="o">=</span> <span class="n">patch</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="s2">"js double.js"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"js:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">js</span><span class="o">.</span><span class="n">ins</span><span class="p">),</span> <span class="s2">"inlet,"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">js</span><span class="o">.</span><span class="n">outs</span><span class="p">),</span> <span class="s2">"outlet"</span><span class="p">)</span>
+
+<span class="c1"># save() lists the linked files; copy them along with the patch.</span>
+<span class="n">patch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"uses_abstractions"</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="unknown_objs.html" class="btn btn-neutral float-left" title="Unknown objects" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="ext_packages.html" class="btn btn-neutral float-right" title="Objects from packages" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2026, Ranger Liu, Mark Santolucito and contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
